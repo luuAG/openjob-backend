@@ -1,10 +1,10 @@
 package com.openjob.model.dto.base;
 
-import lombok.*;
-import org.bson.types.ObjectId;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 public class IdentifierDTO {
-    private ObjectId id;
+    private String id;
 }

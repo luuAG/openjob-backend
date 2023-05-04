@@ -1,9 +1,8 @@
 package com.openjob.model.entity;
 
-import com.openjob.model.common.DynamicData;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.openjob.model.embedded.DynamicData;
 import com.openjob.model.entity.base.BaseUser;
-import com.openjob.model.enums.CompanyType;
-import com.openjob.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,15 +21,17 @@ import java.util.List;
 public class Company extends BaseUser {
     @Indexed(unique = true)
     private String companyName;
+    @Indexed(unique = true)
     private String email;
     private String description;
     private Integer scope;
-    private CompanyType companyType;
-    private List<Language> workingLanguages;
+    private String companyType;
+    private List<String> workingLanguages;
     private List<DynamicData> optionalInformation;
     private BaseUser representative;
 
     @DBRef
+    @JsonIgnore
     private List<Candidate> prefilteredCandidates;
     @DBRef
     private List<Job> jobs;

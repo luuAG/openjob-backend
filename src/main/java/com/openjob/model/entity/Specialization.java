@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Document(collection = "specializations")
 @Getter
@@ -17,7 +14,4 @@ import java.util.List;
 @AllArgsConstructor
 public class Specialization extends BaseEntity {
     private String name;
-
-    @DBRef
-    private List<Skill> skills;
 }

@@ -6,18 +6,18 @@ import com.openjob.controller.shared.response.ResponseGenerator;
 import com.openjob.model.dto.base.IdentifierDTO;
 import com.openjob.model.mapper.BaseMapper;
 import com.openjob.service.BaseService;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Objects;
 
 
 public abstract class BaseController<E, D> {
-    protected BaseService<E, ObjectId> service;
+    protected BaseService<E, String> service;
     protected BaseMapper<E, D> mapper;
 
     @PostConstruct
@@ -29,12 +29,12 @@ public abstract class BaseController<E, D> {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.FIND_ENTITY_SUCCESS,
-                mapper.toDTO(service.getAll(request.getQueryString()))
+                service.getAll(request.getQueryString())
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDTO> getById(@PathVariable ObjectId id) {
+    public ResponseEntity<ResponseDTO> getById(@PathVariable String id) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
@@ -44,7 +44,7 @@ public abstract class BaseController<E, D> {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> saveUpdate(@RequestBody D dto) {
+    public ResponseEntity<ResponseDTO> saveUpdate(@RequestBody @Valid D dto) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
@@ -56,7 +56,7 @@ public abstract class BaseController<E, D> {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDTO> deleteById(@PathVariable ObjectId id) {
+    public ResponseEntity<ResponseDTO> deleteById(@PathVariable String id) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
@@ -65,7 +65,7 @@ public abstract class BaseController<E, D> {
     }
 
     @DeleteMapping("/soft-delete/{id}")
-    public ResponseEntity<ResponseDTO> softDeleteById(@PathVariable ObjectId id) {
+    public ResponseEntity<ResponseDTO> softDeleteById(@PathVariable String id) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
@@ -74,7 +74,7 @@ public abstract class BaseController<E, D> {
     }
 
     @PostMapping("/revert-soft-delete/{id}")
-    public ResponseEntity<ResponseDTO> revertSoftDeleteById(@PathVariable ObjectId id) {
+    public ResponseEntity<ResponseDTO> revertSoftDeleteById(@PathVariable String id) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,

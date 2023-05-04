@@ -1,8 +1,6 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.AccountDTO;
 import com.openjob.model.dto.base.BaseUserDTO;
-import com.openjob.model.entity.Account;
 import com.openjob.model.entity.base.BaseUser;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-16T10:53:11+0700",
+    date = "2023-05-04T17:09:20+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -29,8 +27,8 @@ public class BaseUserMapperImpl implements BaseUserMapper {
         baseUserDTO.setCreatedAt( entity.getCreatedAt() );
         baseUserDTO.setModifiedAt( entity.getModifiedAt() );
         baseUserDTO.setDeletedAt( entity.getDeletedAt() );
-        baseUserDTO.setAccount( accountToAccountDTO( entity.getAccount() ) );
         baseUserDTO.setFullName( entity.getFullName() );
+        baseUserDTO.setJobRole( entity.getJobRole() );
         baseUserDTO.setDob( entity.getDob() );
         baseUserDTO.setPhone( entity.getPhone() );
         List<String> list = entity.getAddresses();
@@ -38,7 +36,6 @@ public class BaseUserMapperImpl implements BaseUserMapper {
             baseUserDTO.setAddresses( new ArrayList<String>( list ) );
         }
         baseUserDTO.setAvatarUrl( entity.getAvatarUrl() );
-        baseUserDTO.setRole( entity.getRole() );
 
         return baseUserDTO;
     }
@@ -55,8 +52,8 @@ public class BaseUserMapperImpl implements BaseUserMapper {
         baseUser.setCreatedAt( dto.getCreatedAt() );
         baseUser.setModifiedAt( dto.getModifiedAt() );
         baseUser.setDeletedAt( dto.getDeletedAt() );
-        baseUser.setAccount( accountDTOToAccount( dto.getAccount() ) );
         baseUser.setFullName( dto.getFullName() );
+        baseUser.setJobRole( dto.getJobRole() );
         baseUser.setDob( dto.getDob() );
         baseUser.setPhone( dto.getPhone() );
         List<String> list = dto.getAddresses();
@@ -64,7 +61,6 @@ public class BaseUserMapperImpl implements BaseUserMapper {
             baseUser.setAddresses( new ArrayList<String>( list ) );
         }
         baseUser.setAvatarUrl( dto.getAvatarUrl() );
-        baseUser.setRole( dto.getRole() );
 
         return baseUser;
     }
@@ -95,41 +91,5 @@ public class BaseUserMapperImpl implements BaseUserMapper {
         }
 
         return list;
-    }
-
-    protected AccountDTO accountToAccountDTO(Account account) {
-        if ( account == null ) {
-            return null;
-        }
-
-        AccountDTO accountDTO = new AccountDTO();
-
-        accountDTO.setId( account.getId() );
-        accountDTO.setCreatedAt( account.getCreatedAt() );
-        accountDTO.setModifiedAt( account.getModifiedAt() );
-        accountDTO.setDeletedAt( account.getDeletedAt() );
-        accountDTO.setUsername( account.getUsername() );
-        accountDTO.setPassword( account.getPassword() );
-        accountDTO.setRole( account.getRole() );
-
-        return accountDTO;
-    }
-
-    protected Account accountDTOToAccount(AccountDTO accountDTO) {
-        if ( accountDTO == null ) {
-            return null;
-        }
-
-        Account account = new Account();
-
-        account.setId( accountDTO.getId() );
-        account.setCreatedAt( accountDTO.getCreatedAt() );
-        account.setModifiedAt( accountDTO.getModifiedAt() );
-        account.setDeletedAt( accountDTO.getDeletedAt() );
-        account.setUsername( accountDTO.getUsername() );
-        account.setPassword( accountDTO.getPassword() );
-        account.setRole( accountDTO.getRole() );
-
-        return account;
     }
 }

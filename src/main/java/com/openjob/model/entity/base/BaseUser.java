@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,16 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "users")
-//@EnableMongoAuditing
 public class BaseUser extends BaseEntity {
     @DBRef
     protected Account account;
 
     protected String fullName;
-    protected ZonedDateTime dob;
+    protected String jobRole;
+    protected Date dob;
     protected String phone;
     protected List<String> addresses;
     protected String avatarUrl;
-    protected String role;
-
 }

@@ -1,23 +1,28 @@
 package com.openjob.service;
 
+import com.openjob.model.dto.request.NewCompanyDTO;
+import com.openjob.model.dto.shared.CompanyDTO;
 import com.openjob.model.entity.Account;
 import com.openjob.model.entity.Company;
 import com.openjob.model.enums.Role;
+import com.openjob.model.mapper.AccountMapper;
+import com.openjob.model.mapper.CompanyMapper;
 import com.openjob.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService extends BaseService<Company, ObjectId> {
+public class CompanyService extends BaseService<Company, String> {
     private final CompanyRepository companyRepository;
     private final MongoTemplate mongoTemplate;
     private final AccountService accountService;
+
+    private final AccountMapper accountMapper;
+    private final CompanyMapper companyMapper;
 
     @Override
     protected void init() {
@@ -26,30 +31,31 @@ public class CompanyService extends BaseService<Company, ObjectId> {
         clazz = Company.class;
     }
 
-    public Company create(Company company, Account account) {
+    public CompanyDTO createNewCompanyAccount(NewCompanyDTO newCompanyDTO) {
+        Account account = accountMapper.toEntity(newCompanyDTO.getAccount());
+        Company company = companyMapper.toEntity(newCompanyDTO.getCompany());
         account.setRole(Role.COMPANY);
+        account.setDeletedAt(new Date().getTime()); // deactivated
         Account savedAccount = accountService.saveUpdate(account, account.getId());
+
         company.setAccount(savedAccount);
-        company.setDeletedAt(new Date().getTime());
-        return saveUpdate(company, company.getId());
+        company.setDeletedAt(new Date().getTime()); // deactivated
+        Company savedCompany;
+        // save company failed -> rollback saved account
+        try {
+            savedCompany = saveUpdate(company, company.getId());
+            savedAccount.setReferencedUserId(savedCompany.getId());
+            accountService.saveUpdate(savedAccount, savedAccount.getId());
+        }catch (Exception e){
+            accountService.deleteById(savedAccount.getId());
+            throw e;
+        }
+        return companyMapper.toDTO(savedCompany);
     }
 
-    @Override
-    public void beforeDelete(Company company) {
-        accountService.deleteById(company.getAccount().getId());
-    }
-
-    @Override
-    public void beforeSave(Company entity) {
-        if (Objects.isNull(entity.getAccount()))
-            entity.setDeletedAt(new Date().getTime());
-    }
-
-    public boolean existsByName(String companyName) {
-        return companyRepository.findByCompanyName(companyName).isPresent();
-    }
-
-    public boolean approveCompanyById(ObjectId id) {
-        return revertSoftDeleteById(id);
+    public boolean approveCompanyById(String id) {
+        Company company = getById(id);
+        return accountService.revertSoftDeleteById(company.getAccount().getId())
+                && revertSoftDeleteById(id);
     }
 }

@@ -1,18 +1,15 @@
 package com.openjob.model.entity;
 
-import com.openjob.model.common.SalaryInfo;
+import com.openjob.model.embedded.SalaryInfo;
 import com.openjob.model.embedded.JobSkill;
 import com.openjob.model.entity.base.BaseEntity;
-import com.openjob.model.enums.JobLevel;
-import com.openjob.model.enums.JobType;
-import com.openjob.model.enums.Workplace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -22,11 +19,11 @@ import java.util.List;
 @Document(collection = "jobs")
 public class Job extends BaseEntity {
     private String title;
-    private ZonedDateTime expiredAt;
+    private Date expiredAt;
 
-    private JobType jobType;
-    private JobLevel jobLevel;
-    private Workplace workplace;
+    private String jobType;
+    private String jobLevel;
+    private String workplace;
     private List<String> addresses;
     private String description;
     private String requirement;

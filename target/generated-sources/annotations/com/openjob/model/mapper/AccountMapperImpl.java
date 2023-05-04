@@ -1,6 +1,6 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.AccountDTO;
+import com.openjob.model.dto.request.AccountDTO;
 import com.openjob.model.entity.Account;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-16T10:53:10+0700",
+    date = "2023-05-04T17:09:20+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component

@@ -1,7 +1,9 @@
 package com.openjob.model.entity.base;
 
-import lombok.*;
-import org.bson.types.ObjectId;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
@@ -13,6 +15,6 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @EnableMongoAuditing
 public class IdentifierEntity {
     @Id
-    protected ObjectId id;
+    protected String id;
 
 }

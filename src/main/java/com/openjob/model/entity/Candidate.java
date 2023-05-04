@@ -1,9 +1,8 @@
 package com.openjob.model.entity;
 
-import com.openjob.model.common.SalaryInfo;
-import com.openjob.model.embedded.CandidateSkill;
+import com.openjob.model.embedded.SalaryInfo;
+import com.openjob.model.dto.CandidateSkillDTO;
 import com.openjob.model.entity.base.BaseUser;
-import com.openjob.model.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,15 +18,16 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "users")
 public class Candidate extends BaseUser {
-    private JobLevel jobLevel;
-    private JobType jobType;
+    private String jobLevel;
+    private String jobType;
     private SalaryInfo salaryRange;
-    private List<Language> foreignLanguages;
-    private CompanyType companyType;
-    private Workplace workplace;
+    private List<String> foreignLanguages;
+    private String companyType;
+    private String workplace;
+    private Specialization specialization;
 
     private Boolean isHidden;
-    private List<CandidateSkill> skills;
+    private List<CandidateSkillDTO> skills;
 
     @DBRef
     private List<Resume> resumes;

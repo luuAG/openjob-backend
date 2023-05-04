@@ -5,6 +5,8 @@ import com.openjob.model.entity.base.BaseEntity;
 import com.openjob.model.entity.base.IdentifierEntity;
 import com.openjob.util.NullAwareBeanUtils;
 import io.github.ajclopez.mss.MongoSpringSearch;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
@@ -31,8 +33,15 @@ public abstract class BaseService<E, ID> {
         return entity.orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ENTITY_NOT_FOUND, null));
     }
 
-    public List<E> getAll(String query) {
-        return baseMongoTemplate.find(MongoSpringSearch.mss(query), clazz);
+    public Page<E> getAll(String query) {
+        if (query == null || query.trim().isEmpty()){
+            query = "_class=" + clazz.getName();
+        } else {
+            query += "&_class=" + clazz.getName();
+        }
+
+        List<E> results = baseMongoTemplate.find(MongoSpringSearch.mss(query), clazz);
+        return new PageImpl<>(results);
     }
 
     public E saveUpdate(E entity, ID id) {
@@ -44,7 +53,6 @@ public abstract class BaseService<E, ID> {
     public boolean deleteById(ID id) {
         Optional<E> entity = repository.findById(id);
         if (entity.isPresent()) {
-            beforeDelete(entity.get());
             repository.deleteById(id);
             return !repository.existsById(id);
         } else
@@ -96,7 +104,6 @@ public abstract class BaseService<E, ID> {
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
-            beforeUpdate(entity);
             return repository.save(existingEntity.get());
         } else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ENTITY_NOT_FOUND, null);
@@ -109,16 +116,9 @@ public abstract class BaseService<E, ID> {
             baseEntity.setCreatedAt(now);
             baseEntity.setModifiedAt(now);
         }
-        beforeSave(entity);
         return repository.save(entity);
     }
 
-    public void beforeSave(E entity) {
-    }
-    public void beforeUpdate(E entity) {
-    }
-    public void beforeDelete(E entity) {
-    }
 
 
 }

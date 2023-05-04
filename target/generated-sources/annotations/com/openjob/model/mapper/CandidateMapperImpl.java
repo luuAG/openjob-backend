@@ -1,12 +1,9 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.AccountDTO;
 import com.openjob.model.dto.CandidateDTO;
-import com.openjob.model.embedded.CandidateSkill;
-import com.openjob.model.entity.Account;
+import com.openjob.model.dto.CandidateSkillDTO;
 import com.openjob.model.entity.Candidate;
 import com.openjob.model.entity.Resume;
-import com.openjob.model.enums.Language;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -14,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-16T10:53:11+0700",
+    date = "2023-05-04T17:09:20+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -32,8 +29,8 @@ public class CandidateMapperImpl implements CandidateMapper {
         candidateDTO.setCreatedAt( entity.getCreatedAt() );
         candidateDTO.setModifiedAt( entity.getModifiedAt() );
         candidateDTO.setDeletedAt( entity.getDeletedAt() );
-        candidateDTO.setAccount( accountToAccountDTO( entity.getAccount() ) );
         candidateDTO.setFullName( entity.getFullName() );
+        candidateDTO.setJobRole( entity.getJobRole() );
         candidateDTO.setDob( entity.getDob() );
         candidateDTO.setPhone( entity.getPhone() );
         List<String> list = entity.getAddresses();
@@ -41,20 +38,20 @@ public class CandidateMapperImpl implements CandidateMapper {
             candidateDTO.setAddresses( new ArrayList<String>( list ) );
         }
         candidateDTO.setAvatarUrl( entity.getAvatarUrl() );
-        candidateDTO.setRole( entity.getRole() );
         candidateDTO.setJobLevel( entity.getJobLevel() );
         candidateDTO.setJobType( entity.getJobType() );
         candidateDTO.setSalaryRange( entity.getSalaryRange() );
-        List<Language> list1 = entity.getForeignLanguages();
+        List<String> list1 = entity.getForeignLanguages();
         if ( list1 != null ) {
-            candidateDTO.setForeignLanguages( new ArrayList<Language>( list1 ) );
+            candidateDTO.setForeignLanguages( new ArrayList<String>( list1 ) );
         }
         candidateDTO.setCompanyType( entity.getCompanyType() );
         candidateDTO.setWorkplace( entity.getWorkplace() );
+        candidateDTO.setSpecialization( entity.getSpecialization() );
         candidateDTO.setIsHidden( entity.getIsHidden() );
-        List<CandidateSkill> list2 = entity.getSkills();
+        List<CandidateSkillDTO> list2 = entity.getSkills();
         if ( list2 != null ) {
-            candidateDTO.setSkills( new ArrayList<CandidateSkill>( list2 ) );
+            candidateDTO.setSkills( new ArrayList<CandidateSkillDTO>( list2 ) );
         }
         List<Resume> list3 = entity.getResumes();
         if ( list3 != null ) {
@@ -76,8 +73,8 @@ public class CandidateMapperImpl implements CandidateMapper {
         candidate.setCreatedAt( dto.getCreatedAt() );
         candidate.setModifiedAt( dto.getModifiedAt() );
         candidate.setDeletedAt( dto.getDeletedAt() );
-        candidate.setAccount( accountDTOToAccount( dto.getAccount() ) );
         candidate.setFullName( dto.getFullName() );
+        candidate.setJobRole( dto.getJobRole() );
         candidate.setDob( dto.getDob() );
         candidate.setPhone( dto.getPhone() );
         List<String> list = dto.getAddresses();
@@ -85,20 +82,20 @@ public class CandidateMapperImpl implements CandidateMapper {
             candidate.setAddresses( new ArrayList<String>( list ) );
         }
         candidate.setAvatarUrl( dto.getAvatarUrl() );
-        candidate.setRole( dto.getRole() );
         candidate.setJobLevel( dto.getJobLevel() );
         candidate.setJobType( dto.getJobType() );
         candidate.setSalaryRange( dto.getSalaryRange() );
-        List<Language> list1 = dto.getForeignLanguages();
+        List<String> list1 = dto.getForeignLanguages();
         if ( list1 != null ) {
-            candidate.setForeignLanguages( new ArrayList<Language>( list1 ) );
+            candidate.setForeignLanguages( new ArrayList<String>( list1 ) );
         }
         candidate.setCompanyType( dto.getCompanyType() );
         candidate.setWorkplace( dto.getWorkplace() );
+        candidate.setSpecialization( dto.getSpecialization() );
         candidate.setIsHidden( dto.getIsHidden() );
-        List<CandidateSkill> list2 = dto.getSkills();
+        List<CandidateSkillDTO> list2 = dto.getSkills();
         if ( list2 != null ) {
-            candidate.setSkills( new ArrayList<CandidateSkill>( list2 ) );
+            candidate.setSkills( new ArrayList<CandidateSkillDTO>( list2 ) );
         }
         List<Resume> list3 = dto.getResumes();
         if ( list3 != null ) {
@@ -134,41 +131,5 @@ public class CandidateMapperImpl implements CandidateMapper {
         }
 
         return list;
-    }
-
-    protected AccountDTO accountToAccountDTO(Account account) {
-        if ( account == null ) {
-            return null;
-        }
-
-        AccountDTO accountDTO = new AccountDTO();
-
-        accountDTO.setId( account.getId() );
-        accountDTO.setCreatedAt( account.getCreatedAt() );
-        accountDTO.setModifiedAt( account.getModifiedAt() );
-        accountDTO.setDeletedAt( account.getDeletedAt() );
-        accountDTO.setUsername( account.getUsername() );
-        accountDTO.setPassword( account.getPassword() );
-        accountDTO.setRole( account.getRole() );
-
-        return accountDTO;
-    }
-
-    protected Account accountDTOToAccount(AccountDTO accountDTO) {
-        if ( accountDTO == null ) {
-            return null;
-        }
-
-        Account account = new Account();
-
-        account.setId( accountDTO.getId() );
-        account.setCreatedAt( accountDTO.getCreatedAt() );
-        account.setModifiedAt( accountDTO.getModifiedAt() );
-        account.setDeletedAt( accountDTO.getDeletedAt() );
-        account.setUsername( accountDTO.getUsername() );
-        account.setPassword( accountDTO.getPassword() );
-        account.setRole( accountDTO.getRole() );
-
-        return account;
     }
 }
