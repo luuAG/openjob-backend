@@ -1,21 +1,25 @@
-package com.openjob.controller.admin.job;
+package com.openjob.controller.admin.candidate;
 
 import com.openjob.constant.SuccessMessage;
 import com.openjob.controller.shared.response.ResponseDTO;
 import com.openjob.controller.shared.response.ResponseGenerator;
-import com.openjob.service.JobService;
+import com.openjob.model.dto.shared.CandidateDTO;
+import com.openjob.model.mapper.CandidateMapper;
+import com.openjob.service.CandidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @RestController
-@RequestMapping("/admin/job")
+@RequestMapping("/admin/candidate")
 @RequiredArgsConstructor
-public class JobController {
-    private final JobService jobService;
+public class CandidateManagementController {
+    private final CandidateService candidateService;
+    private final CandidateMapper candidateMapper;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllWithQuery(HttpServletRequest request) {
@@ -23,7 +27,7 @@ public class JobController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.FIND_ENTITY_SUCCESS,
-                jobService.getAll(request.getQueryString())
+                candidateService.getAll(request.getQueryString())
         );
     }
 
@@ -33,17 +37,20 @@ public class JobController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.FIND_ENTITY_SUCCESS,
-                jobService.getById(id)
+                candidateService.getById(id)
         );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDTO> deleteById(@PathVariable String id) {
+    @PostMapping
+    public ResponseEntity<ResponseDTO> saveUpdate(@RequestBody CandidateDTO dto) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
-                SuccessMessage.DELETE_ENTITY_SUCCESS,
-                jobService.deleteById(id));
+                Objects.isNull(dto.getId()) ?
+                        SuccessMessage.SAVE_ENTITY_SUCCESS :
+                        SuccessMessage.UPDATE_ENTITY_SUCCESS,
+                candidateService.saveUpdate(candidateMapper.toEntity(dto), dto.getId())
+        );
     }
 
     @DeleteMapping("/soft-delete/{id}")
@@ -52,7 +59,7 @@ public class JobController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.DELETE_ENTITY_SUCCESS,
-                jobService.softDeleteById(id));
+                candidateService.softDeleteById(id));
     }
 
     @PostMapping("/revert-soft-delete/{id}")
@@ -61,18 +68,6 @@ public class JobController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.REVERT_ENTITY_SUCCESS,
-                jobService.revertSoftDeleteById(id));
+                candidateService.revertSoftDeleteById(id));
     }
-
-    @GetMapping("/by-company/{companyId}")
-    public ResponseEntity<ResponseDTO> getByCompanyId(@PathVariable String companyId) {
-        return ResponseGenerator.generate(
-                HttpStatus.OK.value(),
-                Boolean.TRUE,
-                SuccessMessage.FIND_ENTITY_SUCCESS,
-                jobService.getByCompanyId(companyId)
-        );
-    }
-
-
 }

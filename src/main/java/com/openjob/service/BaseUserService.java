@@ -34,12 +34,16 @@ public class BaseUserService extends BaseService<BaseUser, String> {
         Account savedAccount = accountService.saveUpdate(account, account.getId());
 
         admin.setAccount(savedAccount);
-        BaseUser savedAdmin = saveUpdate(admin, admin.getId());
-
-        savedAccount.setReferencedUserId(savedAdmin.getId());
-        accountService.saveUpdate(savedAccount, savedAccount.getId());
-
-        return baseUserMapper.toDTO(savedAdmin);
+        BaseUser savedAdmin;
+        try {
+            savedAdmin = saveUpdate(admin, admin.getId());
+            savedAccount.setReferencedUserId(savedAdmin.getId());
+            accountService.saveUpdate(savedAccount, savedAccount.getId());
+            return baseUserMapper.toDTO(savedAdmin);
+        } catch (Exception e) {
+            accountService.deleteById(savedAccount.getId());
+            throw e;
+        }
     }
 
 }

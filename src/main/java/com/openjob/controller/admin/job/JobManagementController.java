@@ -1,30 +1,21 @@
-package com.openjob.controller.admin.company;
+package com.openjob.controller.admin.job;
 
 import com.openjob.constant.SuccessMessage;
 import com.openjob.controller.shared.response.ResponseDTO;
 import com.openjob.controller.shared.response.ResponseGenerator;
-import com.openjob.model.dto.shared.CompanyDTO;
-import com.openjob.model.dto.request.NewCompanyDTO;
-import com.openjob.model.mapper.CompanyMapper;
-import com.openjob.service.CompanyService;
-import freemarker.template.TemplateException;
+import com.openjob.service.JobService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.util.Objects;
 
 @RestController
-@RequestMapping("/admin/company")
+@RequestMapping("/admin/job")
 @RequiredArgsConstructor
-public class CompanyManagementController {
-    private final CompanyService companyService;
-    private final CompanyMapper companyMapper;
+public class JobManagementController {
+    private final JobService jobService;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllWithQuery(HttpServletRequest request) {
@@ -32,7 +23,7 @@ public class CompanyManagementController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.FIND_ENTITY_SUCCESS,
-                companyService.getAll(request.getQueryString())
+                jobService.getAll(request.getQueryString())
         );
     }
 
@@ -42,19 +33,7 @@ public class CompanyManagementController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.FIND_ENTITY_SUCCESS,
-                companyService.getById(id)
-        );
-    }
-
-    @PostMapping
-    public ResponseEntity<ResponseDTO> saveUpdate(@RequestBody  CompanyDTO dto) {
-        return ResponseGenerator.generate(
-                HttpStatus.OK.value(),
-                Boolean.TRUE,
-                Objects.isNull(dto.getId()) ?
-                        SuccessMessage.SAVE_ENTITY_SUCCESS :
-                        SuccessMessage.UPDATE_ENTITY_SUCCESS,
-                companyService.saveUpdate(companyMapper.toEntity(dto), dto.getId())
+                jobService.getById(id)
         );
     }
 
@@ -64,7 +43,7 @@ public class CompanyManagementController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.DELETE_ENTITY_SUCCESS,
-                companyService.deleteById(id));
+                jobService.deleteById(id));
     }
 
     @DeleteMapping("/soft-delete/{id}")
@@ -73,7 +52,7 @@ public class CompanyManagementController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.DELETE_ENTITY_SUCCESS,
-                companyService.softDeleteById(id));
+                jobService.softDeleteById(id));
     }
 
     @PostMapping("/revert-soft-delete/{id}")
@@ -82,26 +61,18 @@ public class CompanyManagementController {
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
                 SuccessMessage.REVERT_ENTITY_SUCCESS,
-                companyService.revertSoftDeleteById(id));
+                jobService.revertSoftDeleteById(id));
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<ResponseDTO> createNewCompanyAccount(@RequestBody @Valid NewCompanyDTO dto) {
+    @GetMapping("/by-company/{companyId}")
+    public ResponseEntity<ResponseDTO> getByCompanyId(@PathVariable String companyId) {
         return ResponseGenerator.generate(
                 HttpStatus.OK.value(),
                 Boolean.TRUE,
-                SuccessMessage.SAVE_ENTITY_SUCCESS,
-                companyService.createNewCompanyAccount(dto)
+                SuccessMessage.FIND_ENTITY_SUCCESS,
+                jobService.getByCompanyId(companyId)
         );
     }
 
-    @PostMapping("/approve/{id}")
-    public ResponseEntity<ResponseDTO> approveCompany(@PathVariable String id) throws MessagingException, TemplateException, IOException {
-        return ResponseGenerator.generate(
-                HttpStatus.OK.value(),
-                Boolean.TRUE,
-                SuccessMessage.SAVE_ENTITY_SUCCESS,
-                companyService.approveCompanyById(id)
-        );
-    }
+
 }

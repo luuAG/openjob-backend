@@ -7,7 +7,7 @@
     <title>Spring Boot Email using FreeMarker</title>
 </head>
 <body>
-<div style="margin-top: 10px">Greetings, ${baseUser.fullName}</div>
+<div style="margin-top: 10px">Greetings, ${company.companyName}</div>
 <div>Your account has been created at OpenJob</div>
 <br/>
 <div> Have a nice day..!</div>

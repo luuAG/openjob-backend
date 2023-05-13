@@ -1,6 +1,6 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.CandidateSkillDTO;
+import com.openjob.model.dto.shared.CandidateSkillDTO;
 import com.openjob.model.embedded.CandidateSkill;
 import org.mapstruct.Mapper;
 

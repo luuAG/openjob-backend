@@ -19,20 +19,26 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company extends BaseUser {
-    @Indexed(unique = true)
+    @Indexed(unique = true, sparse = true, name = "companyName")
     private String companyName;
-    @Indexed(unique = true)
+    @Indexed(unique = true, sparse = true, name = "emailUser")
     private String email;
     private String description;
-    private Integer scope;
+    private String scope;
     private String companyType;
     private List<String> workingLanguages;
     private List<DynamicData> optionalInformation;
     private BaseUser representative;
+    private Boolean isPremium = false;
+
+    private Double balance = (double) 0;
+    private Integer amountOfJobs;
+    private Integer amountOfCvViews;
 
     @DBRef
     @JsonIgnore
     private List<Candidate> prefilteredCandidates;
     @DBRef
+    @JsonIgnore
     private List<Job> jobs;
 }

@@ -1,6 +1,6 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.CandidateDTO;
+import com.openjob.model.dto.shared.CandidateDTO;
 import com.openjob.model.entity.Candidate;
 import org.mapstruct.Mapper;
 

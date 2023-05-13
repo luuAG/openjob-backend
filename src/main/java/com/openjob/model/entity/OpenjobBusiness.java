@@ -30,7 +30,7 @@ public class OpenjobBusiness extends IdentifierEntity {
     // premium
     private Integer premiumFreeJob;
     private Integer premiumFreeViewCv;
-
+    private Double premiumPrice;
 
 
 

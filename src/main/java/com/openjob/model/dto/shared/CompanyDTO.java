@@ -14,7 +14,7 @@ public class CompanyDTO extends BaseUserDTO {
     private String companyName;
     private String email;
     private String description;
-    private Integer scope;
+    private String scope;
     private String companyType;
     private List<String> workingLanguages;
     private List<DynamicData> optionalInformation;

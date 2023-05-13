@@ -1,4 +1,4 @@
-package com.openjob.controller.shared.controller;
+package com.openjob.controller.shared;
 
 import com.openjob.constant.SuccessMessage;
 import com.openjob.controller.shared.response.ResponseDTO;

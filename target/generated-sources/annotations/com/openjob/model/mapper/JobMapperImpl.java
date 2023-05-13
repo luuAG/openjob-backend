@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T17:09:19+0700",
+    date = "2023-05-12T00:15:20+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -33,6 +33,7 @@ public class JobMapperImpl implements JobMapper {
         jobDTO.setDeletedAt( entity.getDeletedAt() );
         jobDTO.setTitle( entity.getTitle() );
         jobDTO.setExpiredAt( entity.getExpiredAt() );
+        jobDTO.setActive( entity.isActive() );
         jobDTO.setJobType( entity.getJobType() );
         jobDTO.setJobLevel( entity.getJobLevel() );
         jobDTO.setWorkplace( entity.getWorkplace() );
@@ -44,6 +45,8 @@ public class JobMapperImpl implements JobMapper {
         jobDTO.setRequirement( entity.getRequirement() );
         jobDTO.setBenefit( entity.getBenefit() );
         jobDTO.setSalaryInfo( entity.getSalaryInfo() );
+        jobDTO.setRecruitingAmount( entity.getRecruitingAmount() );
+        jobDTO.setDurationInDays( entity.getDurationInDays() );
         jobDTO.setJobSkills( jobSkillMapper.toDTO( entity.getJobSkills() ) );
 
         return jobDTO;
@@ -63,6 +66,7 @@ public class JobMapperImpl implements JobMapper {
         job.setDeletedAt( dto.getDeletedAt() );
         job.setTitle( dto.getTitle() );
         job.setExpiredAt( dto.getExpiredAt() );
+        job.setActive( dto.isActive() );
         job.setJobType( dto.getJobType() );
         job.setJobLevel( dto.getJobLevel() );
         job.setWorkplace( dto.getWorkplace() );
@@ -74,6 +78,8 @@ public class JobMapperImpl implements JobMapper {
         job.setRequirement( dto.getRequirement() );
         job.setBenefit( dto.getBenefit() );
         job.setSalaryInfo( dto.getSalaryInfo() );
+        job.setRecruitingAmount( dto.getRecruitingAmount() );
+        job.setDurationInDays( dto.getDurationInDays() );
         job.setJobSkills( jobSkillMapper.toEntity( dto.getJobSkills() ) );
 
         return job;

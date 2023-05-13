@@ -1,9 +1,12 @@
 package com.openjob.model.mapper;
 
-import com.openjob.model.dto.CandidateDTO;
-import com.openjob.model.dto.CandidateSkillDTO;
+import com.openjob.model.dto.shared.CandidateDTO;
+import com.openjob.model.dto.shared.CandidateSkillDTO;
+import com.openjob.model.embedded.Certificate;
+import com.openjob.model.embedded.DynamicData;
+import com.openjob.model.embedded.Education;
+import com.openjob.model.embedded.Experience;
 import com.openjob.model.entity.Candidate;
-import com.openjob.model.entity.Resume;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T17:09:20+0700",
+    date = "2023-05-12T00:15:18+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -38,6 +41,7 @@ public class CandidateMapperImpl implements CandidateMapper {
             candidateDTO.setAddresses( new ArrayList<String>( list ) );
         }
         candidateDTO.setAvatarUrl( entity.getAvatarUrl() );
+        candidateDTO.setJobTitle( entity.getJobTitle() );
         candidateDTO.setJobLevel( entity.getJobLevel() );
         candidateDTO.setJobType( entity.getJobType() );
         candidateDTO.setSalaryRange( entity.getSalaryRange() );
@@ -48,14 +52,32 @@ public class CandidateMapperImpl implements CandidateMapper {
         candidateDTO.setCompanyType( entity.getCompanyType() );
         candidateDTO.setWorkplace( entity.getWorkplace() );
         candidateDTO.setSpecialization( entity.getSpecialization() );
-        candidateDTO.setIsHidden( entity.getIsHidden() );
-        List<CandidateSkillDTO> list2 = entity.getSkills();
+        candidateDTO.setObjective( entity.getObjective() );
+        candidateDTO.setSummary( entity.getSummary() );
+        List<Education> list2 = entity.getEducations();
         if ( list2 != null ) {
-            candidateDTO.setSkills( new ArrayList<CandidateSkillDTO>( list2 ) );
+            candidateDTO.setEducations( new ArrayList<Education>( list2 ) );
         }
-        List<Resume> list3 = entity.getResumes();
+        List<Experience> list3 = entity.getExperience();
         if ( list3 != null ) {
-            candidateDTO.setResumes( new ArrayList<Resume>( list3 ) );
+            candidateDTO.setExperience( new ArrayList<Experience>( list3 ) );
+        }
+        List<String> list4 = entity.getLanguages();
+        if ( list4 != null ) {
+            candidateDTO.setLanguages( new ArrayList<String>( list4 ) );
+        }
+        List<Certificate> list5 = entity.getCertificate();
+        if ( list5 != null ) {
+            candidateDTO.setCertificate( new ArrayList<Certificate>( list5 ) );
+        }
+        List<DynamicData> list6 = entity.getOptionalInformation();
+        if ( list6 != null ) {
+            candidateDTO.setOptionalInformation( new ArrayList<DynamicData>( list6 ) );
+        }
+        candidateDTO.setIsHidden( entity.getIsHidden() );
+        List<CandidateSkillDTO> list7 = entity.getSkills();
+        if ( list7 != null ) {
+            candidateDTO.setSkills( new ArrayList<CandidateSkillDTO>( list7 ) );
         }
 
         return candidateDTO;
@@ -82,6 +104,7 @@ public class CandidateMapperImpl implements CandidateMapper {
             candidate.setAddresses( new ArrayList<String>( list ) );
         }
         candidate.setAvatarUrl( dto.getAvatarUrl() );
+        candidate.setJobTitle( dto.getJobTitle() );
         candidate.setJobLevel( dto.getJobLevel() );
         candidate.setJobType( dto.getJobType() );
         candidate.setSalaryRange( dto.getSalaryRange() );
@@ -92,14 +115,32 @@ public class CandidateMapperImpl implements CandidateMapper {
         candidate.setCompanyType( dto.getCompanyType() );
         candidate.setWorkplace( dto.getWorkplace() );
         candidate.setSpecialization( dto.getSpecialization() );
-        candidate.setIsHidden( dto.getIsHidden() );
-        List<CandidateSkillDTO> list2 = dto.getSkills();
+        candidate.setObjective( dto.getObjective() );
+        candidate.setSummary( dto.getSummary() );
+        List<Education> list2 = dto.getEducations();
         if ( list2 != null ) {
-            candidate.setSkills( new ArrayList<CandidateSkillDTO>( list2 ) );
+            candidate.setEducations( new ArrayList<Education>( list2 ) );
         }
-        List<Resume> list3 = dto.getResumes();
+        List<Experience> list3 = dto.getExperience();
         if ( list3 != null ) {
-            candidate.setResumes( new ArrayList<Resume>( list3 ) );
+            candidate.setExperience( new ArrayList<Experience>( list3 ) );
+        }
+        List<String> list4 = dto.getLanguages();
+        if ( list4 != null ) {
+            candidate.setLanguages( new ArrayList<String>( list4 ) );
+        }
+        List<Certificate> list5 = dto.getCertificate();
+        if ( list5 != null ) {
+            candidate.setCertificate( new ArrayList<Certificate>( list5 ) );
+        }
+        List<DynamicData> list6 = dto.getOptionalInformation();
+        if ( list6 != null ) {
+            candidate.setOptionalInformation( new ArrayList<DynamicData>( list6 ) );
+        }
+        candidate.setIsHidden( dto.getIsHidden() );
+        List<CandidateSkillDTO> list7 = dto.getSkills();
+        if ( list7 != null ) {
+            candidate.setSkills( new ArrayList<CandidateSkillDTO>( list7 ) );
         }
 
         return candidate;

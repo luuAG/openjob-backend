@@ -2,23 +2,22 @@ package com.openjob.controller.shared.exception;
 
 import com.openjob.controller.shared.response.ResponseDTO;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.naming.InsufficientResourcesException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler {
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+public class ExceptionHandler {
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(
                 new ResponseDTO(Boolean.FALSE, HttpStatus.BAD_REQUEST.getReasonPhrase(), collectError(ex)),
                 HttpStatus.BAD_REQUEST);
@@ -27,9 +26,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     private Map<String, String> collectError(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> {
-            errors.put(((FieldError) error).getField(), error.getDefaultMessage());
-        });
+        ex.getBindingResult().getAllErrors().forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
         if (errors.isEmpty())
             errors.put("errorMessage", ex.getMessage());
         return errors;
@@ -58,6 +55,13 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         message = message.substring(0, message.indexOf("}") + 1);
         return new ResponseEntity<>(
                 new ResponseDTO(Boolean.FALSE, message, null),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(InsufficientResourcesException.class)
+    public ResponseEntity<ResponseDTO> handleInsufficientResourcesException(InsufficientResourcesException ex) {
+        return new ResponseEntity<>(
+                new ResponseDTO(Boolean.FALSE, ex.getMessage(), null),
                 HttpStatus.BAD_REQUEST);
     }
 

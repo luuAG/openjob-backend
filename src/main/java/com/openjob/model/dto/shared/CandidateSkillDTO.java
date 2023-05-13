@@ -1,4 +1,4 @@
-package com.openjob.model.dto;
+package com.openjob.model.dto.shared;
 
 import com.openjob.model.dto.shared.SkillDTO;
 import lombok.Getter;

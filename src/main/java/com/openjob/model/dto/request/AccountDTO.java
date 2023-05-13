@@ -1,7 +1,7 @@
 package com.openjob.model.dto.request;
 
 import com.openjob.model.dto.base.BaseDTO;
-import com.openjob.model.enums.Role;
+import com.openjob.model.dto.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
