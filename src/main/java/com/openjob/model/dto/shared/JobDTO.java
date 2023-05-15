@@ -12,7 +12,6 @@ import java.util.List;
 public class JobDTO extends BaseDTO {
     private String title;
     private Long expiredAt;
-    private boolean isActive;
 
     private String jobType;
     private String jobLevel;

@@ -22,7 +22,6 @@ import java.util.List;
 public class Job extends BaseEntity {
     private String title;
     private Long expiredAt;
-    private boolean isActive;
 
     private String jobType;
     private String jobLevel;

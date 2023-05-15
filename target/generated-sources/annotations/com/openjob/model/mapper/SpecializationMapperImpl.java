@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T00:15:19+0700",
+    date = "2023-05-15T22:32:11+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -27,6 +27,7 @@ public class SpecializationMapperImpl implements SpecializationMapper {
         specializationDTO.setCreatedAt( entity.getCreatedAt() );
         specializationDTO.setModifiedAt( entity.getModifiedAt() );
         specializationDTO.setDeletedAt( entity.getDeletedAt() );
+        specializationDTO.setIsActive( entity.getIsActive() );
         specializationDTO.setName( entity.getName() );
 
         return specializationDTO;
@@ -44,6 +45,7 @@ public class SpecializationMapperImpl implements SpecializationMapper {
         specialization.setCreatedAt( dto.getCreatedAt() );
         specialization.setModifiedAt( dto.getModifiedAt() );
         specialization.setDeletedAt( dto.getDeletedAt() );
+        specialization.setIsActive( dto.getIsActive() );
         specialization.setName( dto.getName() );
 
         return specialization;

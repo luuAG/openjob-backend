@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T00:15:19+0700",
+    date = "2023-05-15T22:32:10+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +30,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         companyDTO.setCreatedAt( entity.getCreatedAt() );
         companyDTO.setModifiedAt( entity.getModifiedAt() );
         companyDTO.setDeletedAt( entity.getDeletedAt() );
+        companyDTO.setIsActive( entity.getIsActive() );
         companyDTO.setFullName( entity.getFullName() );
         companyDTO.setJobRole( entity.getJobRole() );
         companyDTO.setDob( entity.getDob() );
@@ -69,6 +70,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         company.setCreatedAt( dto.getCreatedAt() );
         company.setModifiedAt( dto.getModifiedAt() );
         company.setDeletedAt( dto.getDeletedAt() );
+        company.setIsActive( dto.getIsActive() );
         company.setFullName( dto.getFullName() );
         company.setJobRole( dto.getJobRole() );
         company.setDob( dto.getDob() );
@@ -135,6 +137,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         baseUserDTO.setCreatedAt( baseUser.getCreatedAt() );
         baseUserDTO.setModifiedAt( baseUser.getModifiedAt() );
         baseUserDTO.setDeletedAt( baseUser.getDeletedAt() );
+        baseUserDTO.setIsActive( baseUser.getIsActive() );
         baseUserDTO.setFullName( baseUser.getFullName() );
         baseUserDTO.setJobRole( baseUser.getJobRole() );
         baseUserDTO.setDob( baseUser.getDob() );
@@ -159,6 +162,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         baseUser.setCreatedAt( baseUserDTO.getCreatedAt() );
         baseUser.setModifiedAt( baseUserDTO.getModifiedAt() );
         baseUser.setDeletedAt( baseUserDTO.getDeletedAt() );
+        baseUser.setIsActive( baseUserDTO.getIsActive() );
         baseUser.setFullName( baseUserDTO.getFullName() );
         baseUser.setJobRole( baseUserDTO.getJobRole() );
         baseUser.setDob( baseUserDTO.getDob() );

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T00:15:16+0700",
+    date = "2023-05-15T22:32:10+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -27,6 +27,7 @@ public class AccountMapperImpl implements AccountMapper {
         accountDTO.setCreatedAt( entity.getCreatedAt() );
         accountDTO.setModifiedAt( entity.getModifiedAt() );
         accountDTO.setDeletedAt( entity.getDeletedAt() );
+        accountDTO.setIsActive( entity.getIsActive() );
         accountDTO.setUsername( entity.getUsername() );
         accountDTO.setPassword( entity.getPassword() );
         accountDTO.setRole( entity.getRole() );
@@ -46,6 +47,7 @@ public class AccountMapperImpl implements AccountMapper {
         account.setCreatedAt( dto.getCreatedAt() );
         account.setModifiedAt( dto.getModifiedAt() );
         account.setDeletedAt( dto.getDeletedAt() );
+        account.setIsActive( dto.getIsActive() );
         account.setUsername( dto.getUsername() );
         account.setPassword( dto.getPassword() );
         account.setRole( dto.getRole() );

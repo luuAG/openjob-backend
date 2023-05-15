@@ -45,12 +45,13 @@ public class JobService extends BaseService<Job, String> {
 
     public boolean disable(String id) throws MessagingException, TemplateException, IOException {
         Job job = getById(id);
-        job.setActive(false);
+        job.setIsActive(false);
         saveUpdate(job, job.getId());
         // send notification mail
         for (Candidate candidate : job.getCandidates()){
             Map<String, Object> data = new HashMap<>();
             data.put("job", job);
+            data.put("candidate", candidate);
             emailUtils.sendEmail(candidate.getAccount().getUsername(), "A job you applied has been closed", data, EmailCase.JOB_DEACTIVATED);
         }
         return true;
@@ -58,12 +59,13 @@ public class JobService extends BaseService<Job, String> {
 
     public boolean enable(String id) throws MessagingException, TemplateException, IOException {
         Job job = getById(id);
-        job.setActive(true);
+        job.setIsActive(true);
         saveUpdate(job, job.getId());
         // send notification mail
         for (Candidate candidate : job.getCandidates()){
             Map<String, Object> data = new HashMap<>();
             data.put("job", job);
+            data.put("candidate", candidate);
             emailUtils.sendEmail(candidate.getAccount().getUsername(), "A closed job has been re-opened", data, EmailCase.JOB_REACTIVATED);
         }
         return true;
@@ -85,7 +87,7 @@ public class JobService extends BaseService<Job, String> {
         List<Job> featuredJobs = new ArrayList<>();
         premiumCompanies.forEach(company -> {
             company.getJobs().forEach(job -> {
-                if (job.isActive() && Objects.isNull(job.getDeletedAt()))
+                if (job.getIsActive() && Objects.isNull(job.getDeletedAt()))
                     featuredJobs.add(job);
             });
         });
@@ -124,7 +126,7 @@ public class JobService extends BaseService<Job, String> {
         }
 
         job.setCompany(company);
-        job.setActive(true);
+        job.setIsActive(true);
 
         Job savedJob = saveUpdate(job, job.getId());
 
@@ -145,6 +147,7 @@ public class JobService extends BaseService<Job, String> {
         for (Candidate candidate : updatedJob.getCandidates()){
             Map<String, Object> data = new HashMap<>();
             data.put("job", updatedJob);
+            data.put("candidate", candidate);
             emailUtils.sendEmail(candidate.getAccount().getUsername(), "A job has updated", data, EmailCase.JOB_UPDATED);
         }
         return updatedJob;

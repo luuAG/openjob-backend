@@ -24,5 +24,6 @@ public class Account extends BaseEntity {
     private Role role;
     @JsonIgnore
     private String referencedUserId;
-
+    @JsonIgnore
+    private String forgotPasswordToken;
 }

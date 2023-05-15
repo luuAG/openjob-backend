@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T00:15:18+0700",
+    date = "2023-05-15T22:32:11+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -27,6 +27,7 @@ public class SkillMapperImpl implements SkillMapper {
         skillDTO.setCreatedAt( entity.getCreatedAt() );
         skillDTO.setModifiedAt( entity.getModifiedAt() );
         skillDTO.setDeletedAt( entity.getDeletedAt() );
+        skillDTO.setIsActive( entity.getIsActive() );
         skillDTO.setName( entity.getName() );
         skillDTO.setIsVerified( entity.getIsVerified() );
 
@@ -45,6 +46,7 @@ public class SkillMapperImpl implements SkillMapper {
         skill.setCreatedAt( dto.getCreatedAt() );
         skill.setModifiedAt( dto.getModifiedAt() );
         skill.setDeletedAt( dto.getDeletedAt() );
+        skill.setIsActive( dto.getIsActive() );
         skill.setName( dto.getName() );
         skill.setIsVerified( dto.getIsVerified() );
 

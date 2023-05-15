@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-12T00:15:19+0700",
+    date = "2023-05-15T22:32:11+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
@@ -27,6 +27,7 @@ public class BaseUserMapperImpl implements BaseUserMapper {
         baseUserDTO.setCreatedAt( entity.getCreatedAt() );
         baseUserDTO.setModifiedAt( entity.getModifiedAt() );
         baseUserDTO.setDeletedAt( entity.getDeletedAt() );
+        baseUserDTO.setIsActive( entity.getIsActive() );
         baseUserDTO.setFullName( entity.getFullName() );
         baseUserDTO.setJobRole( entity.getJobRole() );
         baseUserDTO.setDob( entity.getDob() );
@@ -52,6 +53,7 @@ public class BaseUserMapperImpl implements BaseUserMapper {
         baseUser.setCreatedAt( dto.getCreatedAt() );
         baseUser.setModifiedAt( dto.getModifiedAt() );
         baseUser.setDeletedAt( dto.getDeletedAt() );
+        baseUser.setIsActive( dto.getIsActive() );
         baseUser.setFullName( dto.getFullName() );
         baseUser.setJobRole( dto.getJobRole() );
         baseUser.setDob( dto.getDob() );

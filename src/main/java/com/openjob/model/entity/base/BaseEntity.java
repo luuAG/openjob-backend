@@ -16,4 +16,6 @@ public class BaseEntity extends IdentifierEntity {
     protected Long modifiedAt;
     @JsonIgnore
     protected Long deletedAt;
+
+    protected Boolean isActive;
 }
