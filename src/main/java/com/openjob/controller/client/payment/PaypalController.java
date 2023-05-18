@@ -10,7 +10,6 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class PaypalController {
     private static final String SUCCESS_URL = "/success";
 
     @PostMapping("/pay")
-    public ResponseEntity<Void> createPayment(@RequestBody PaymentDTO dto) {
+    public String createPayment(@RequestBody PaymentDTO dto) {
         try {
             Payment payment = paypalService.createPayment(dto.getPrice(), dto.getCurrency(), dto.getMethod(),
                     dto.getIntent(), dto.getDescription(), serverBaseUrl + CANCEL_URL,
@@ -35,18 +34,14 @@ public class PaypalController {
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
 //                    return "redirect:"+link.getHref();
-                    return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-                            .header(HttpHeaders.LOCATION, link.getHref())
-                            .build();
+                    return link.getHref();
                 }
             }
 
         } catch (PayPalRESTException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-                .header(HttpHeaders.LOCATION, serverBaseUrl + CANCEL_URL)
-                .build();
+        return serverBaseUrl + CANCEL_URL;
     }
 
     @GetMapping(value = CANCEL_URL)
