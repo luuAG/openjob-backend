@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class PaypalController {
     private static final String SUCCESS_URL = "/success";
 
     @PostMapping("/pay")
-    public String createPayment(@RequestBody PaymentDTO dto) {
+    public RedirectView createPayment(@RequestBody PaymentDTO dto) {
         try {
             Payment payment = paypalService.createPayment(dto.getPrice(), dto.getCurrency(), dto.getMethod(),
                     dto.getIntent(), dto.getDescription(), serverBaseUrl + CANCEL_URL,
@@ -34,14 +35,14 @@ public class PaypalController {
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
 //                    return "redirect:"+link.getHref();
-                    return link.getHref();
+                    return new RedirectView(link.getHref());
                 }
             }
 
         } catch (PayPalRESTException e) {
             e.printStackTrace();
         }
-        return serverBaseUrl + CANCEL_URL;
+        return new RedirectView(serverBaseUrl + CANCEL_URL);
     }
 
     @GetMapping(value = CANCEL_URL)
