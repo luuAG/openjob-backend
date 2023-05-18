@@ -9,4 +9,8 @@ public class SuccessMessage {
 
     // COMPANY
     public static final String APPROVE_COMPANY_SUCCESS = "Approve company successfully";
+
+    // PAYMENT
+    public static final String PAYMENT_SUCCESS = "Payment made successfully";
+    public static final String PAYMENT_FAILURE = "Payment failed";
 }

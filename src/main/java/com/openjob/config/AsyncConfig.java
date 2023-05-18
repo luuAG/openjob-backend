@@ -1,4 +1,4 @@
-package com.openjob.config.async;
+package com.openjob.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
